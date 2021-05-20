@@ -40,6 +40,8 @@ class PushNotificationService {
 
     //Push notifications
     await Firebase.initializeApp();
+    await requestPermissions();
+
     token = await FirebaseMessaging.instance.getToken();
     print('Token: '+ token.toString());
     //token: e6AiPT99Tu--HF0EEo7ZR8:APA91bEuO6191CTokiRi_lmaVKzj7PrJ-CSwr38vxXmdLDNI_8rBz_fL-dG7YP_qOWAK54pb0GrN9P3WhOPXolg9yomG3gbKdrzvCo6ikcaVI7w4_5mJNPVTztIEDECfGNUZ0y54pBpJ
@@ -53,6 +55,21 @@ class PushNotificationService {
 
     //Local notifications
 
+  }
+
+  //IOS - Web
+  static requestPermissions() async {
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true
+    );
+    
+    print('User push notifications status: ${settings.authorizationStatus}');
   }
 
   static _closeStreams(){
